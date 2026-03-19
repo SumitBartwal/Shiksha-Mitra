@@ -1,4 +1,10 @@
-const API_BASE = window.location.protocol === "file:" ? "http://127.0.0.1:8000" : (window.location.port === "8000" ? window.location.origin : "http://127.0.0.1:8000");
+const API_BASE = (() => {
+  if (window.location.protocol === "file:") return "http://127.0.0.1:8000";
+  if (window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost") {
+    return window.location.port === "8000" ? window.location.origin : "http://127.0.0.1:8000";
+  }
+  return window.location.origin;
+})();
 const PAGE_SIZE = 25;
 const FACULTY_TABS = ["Overview", "Student List", "Intervention History"];
 
@@ -54,9 +60,20 @@ async function init() {
 }
 //error handeling of loading error 
 async function fetchJson(path, options) {
-  const response = await fetch(`${API_BASE}${path}`, options);
-  const data = await response.json();
-  if (!response.ok) throw new Error(data.detail || "Request failed");
+  let response;
+  try {
+    response = await fetch(`${API_BASE}${path}`, options);
+  } catch (error) {
+    throw new Error("Unable to reach the backend service.");
+  }
+
+  const isJson = response.headers.get("content-type")?.includes("application/json");
+  const data = isJson ? await response.json() : null;
+
+  if (!response.ok) {
+    throw new Error((data && data.detail) || `Request failed (${response.status})`);
+  }
+
   return data;
 }
 
