@@ -469,25 +469,26 @@ function renderCausePanel() {
 }
 
 function renderModelMetricsPanel() {
-  if (!state.modelMetrics) return `<section class="panel"><p class="muted">Loading model metrics...</p></section>`;
+  if (!state.modelMetrics) return `<section class="panel"><p class="muted">Loading model summary...</p></section>`;
   const metrics = state.modelMetrics;
   const summaryCards = [
-    ["Accuracy", `${Math.round(metrics.accuracy * 100)}%`],
-    ["Macro Recall", `${Math.round(metrics.macro_recall * 100)}%`],
-    ["Macro Precision", `${Math.round(metrics.macro_precision * 100)}%`],
-    ["Macro F1", `${Math.round(metrics.macro_f1 * 100)}%`],
+    ["Overall Correct Predictions", `${Math.round(metrics.accuracy * 100)}%`],
+    ["Balanced Risk Detection", `${Math.round(metrics.macro_recall * 100)}%`],
+    ["Prediction Reliability", `${Math.round(metrics.macro_precision * 100)}%`],
+    ["Overall Model Stability", `${Math.round(metrics.macro_f1 * 100)}%`],
   ];
   const labels = metrics.confusion_matrix.labels || [];
   const matrix = metrics.confusion_matrix.matrix || [];
   return `
     <section class="panel">
-      <div class="panel-header"><div class="panel-title"><p class="eyebrow">Model Review</p><h3>Ordinal Logistic Regression Metrics</h3></div><span class="count-chip">${escapeHtml(metrics.validation_method)}</span></div>
+      <div class="panel-header"><div class="panel-title"><p class="eyebrow">Prediction Summary</p><h3>How Well the Risk Review Model Performs</h3></div><span class="count-chip">Checked on multiple student groups</span></div>
+      <p class="small-note">This section shows how reliably the system separates low, medium, and high risk students using past student records.</p>
       <div class="metric-strip">${summaryCards.map(([label, value]) => `<div class="mini-metric"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong></div>`).join("")}</div>
       <div class="section-grid two-col">
-        <div class="panel-subsection"><p class="eyebrow">Per-Class Recall</p><div class="legend-list">${Object.entries(metrics.class_recall || {}).map(([label, value]) => `<div class="legend-row"><div class="legend-top"><div class="legend-label"><span class="color-dot ${toneFromBand(label)}"></span>${escapeHtml(label)} Risk</div><strong>${Math.round(value * 100)}%</strong></div><div class="legend-sub">Support: ${(metrics.class_support || {})[label] || 0} students</div></div>`).join("")}</div></div>
-        <div class="panel-subsection"><p class="eyebrow">Why This Model</p><ol class="point-list">${(metrics.model_choice_reasons || []).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ol></div>
+        <div class="panel-subsection"><p class="eyebrow">Correctly Identified By Risk Level</p><div class="legend-list">${Object.entries(metrics.class_recall || {}).map(([label, value]) => `<div class="legend-row"><div class="legend-top"><div class="legend-label"><span class="color-dot ${toneFromBand(label)}"></span>${escapeHtml(label)} Risk</div><strong>${Math.round(value * 100)}%</strong></div><div class="legend-sub">Out of ${(metrics.class_support || {})[label] || 0} students in this group, this many were identified correctly.</div></div>`).join("")}</div></div>
+        <div class="panel-subsection"><p class="eyebrow">Why This Model Fits This Dashboard</p><ol class="point-list"><li>It works well on structured student data like attendance, marks, backlogs, and CGPA.</li><li>It keeps the risk flow in order: low, medium, then high.</li><li>It is easier for faculty to explain because the results come from clear academic factors.</li></ol></div>
       </div>
-      <div class="panel-subsection"><p class="eyebrow">Confusion Matrix</p><div class="matrix-grid"><div class="matrix-row matrix-header"><span></span>${labels.map((label) => `<span>${escapeHtml(label)}</span>`).join("")}</div>${matrix.map((row, rowIndex) => `<div class="matrix-row"><span>${escapeHtml(labels[rowIndex] || "")}</span>${row.map((value) => `<span>${value}</span>`).join("")}</div>`).join("")}</div></div>
+      <div class="panel-subsection"><p class="eyebrow">Prediction Match Table</p><p class="small-note">Rows show the actual student group. Columns show what the system predicted.</p><div class="matrix-grid"><div class="matrix-row matrix-header"><span></span>${labels.map((label) => `<span>${escapeHtml(label)}</span>`).join("")}</div>${matrix.map((row, rowIndex) => `<div class="matrix-row"><span>${escapeHtml(labels[rowIndex] || "")}</span>${row.map((value) => `<span>${value}</span>`).join("")}</div>`).join("")}</div></div>
     </section>
   `;
 }
