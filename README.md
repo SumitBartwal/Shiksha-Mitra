@@ -36,7 +36,7 @@ The result is a deployable decision-support product combining:
 ## 🖥 Product Preview
 
 <p align="center">
-  <img src="ui-ux%20design.png" alt="UI Preview" width="85%" />
+  <img src="ui_ux.png" alt="UI Preview" width="95%" />
 </p>
 
 <p align="center"><em>Faculty-first dashboard with risk analysis, cause detection, and intervention tracking.</em></p>
