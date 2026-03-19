@@ -136,7 +136,7 @@ Why this works well in a university setting:
 ## 🔄 End-to-End Implementation Flow
 
 <p align="center">
-  <img src="./readme_images/implementation.png" alt="Implementation Flow" width="75%" />
+  <img src="implementation.png" alt="Implementation Flow" width="75%" />
 </p>
 
 <p align="center"><em>From data ingestion to live faculty intervention.</em></p>
