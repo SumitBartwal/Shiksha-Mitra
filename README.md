@@ -1,93 +1,97 @@
 <div align="center">
-  <img src="public/logo.jpg" alt="Shiksha Mitra Logo" width="280" />
-  <h1>Shiksha Mitra</h1>
-  <p><strong>AI-Powered Student Risk Detection and Early Intervention for University SIMS</strong></p>
-  <p>
-    <a href="https://shiksha-mitra-xzdx.onrender.com/"><strong>Live Demo</strong></a>
-    |
-    <a href="#suggested-demo-flow"><strong>Demo Flow</strong></a>
-    |
-    <a href="#ai-engine"><strong>AI Engine</strong></a>
-  </p>
+
+<img src="public/logo.jpg" alt="Shiksha Mitra Logo" width="200" />
+
+# Shiksha Mitra  
+### AI-Powered Student Risk Detection & Early Intervention for University SIMS
+
+[**🔗 Live Demo**](https://shiksha-mitra-xzdx.onrender.com/) 
+
+It may take some time be patient please
+
 </div>
 
 ---
 
-## Overview
+## 🎯 Overview
 
-**Shiksha Mitra** is a full-stack academic early-warning system designed for a university SIMS workflow. It transforms raw academic records into a clear faculty action system.
+**Shiksha Mitra** is a full-stack academic early-warning system built for real university SIMS workflows.
 
-Instead of showing only marks and attendance, it answers three practical questions:
+It transforms raw academic records into structured faculty action.
 
-- **Which students are slipping?**
-- **Why are they slipping?**
+Instead of only displaying marks and attendance, it answers three practical questions:
+
+- **Who is at risk?**
+- **Why are they at risk?**
 - **What should faculty do next?**
 
-The platform combines a clean faculty dashboard, a student-facing improvement plan, and an interpretable AI risk engine in one deployable product.
+The result is a deployable decision-support product combining:
 
-## Product Preview
+- A faculty dashboard  
+- A student improvement view  
+- An interpretable AI risk engine  
+
+---
+
+## 🖥 Product Preview
 
 <p align="center">
-  <img src="ui-ux%20design.png" alt="Shiksha Mitra UI Preview" width="100%" />
+  <img src="ui-ux%20design.png" alt="UI Preview" width="85%" />
 </p>
 
-<p align="center"><em>Faculty-first university dashboard with academic risk analysis, intervention tracking, and student improvement planning.</em></p>
+<p align="center"><em>Faculty-first dashboard with risk analysis, cause detection, and intervention tracking.</em></p>
 
-## Why This Project Stands Out
+---
 
-| Challenge in Universities | What Shiksha Mitra Does |
-|---|---|
-| Academic data exists, but action comes too late | Detects risk early using structured student performance data |
-| Teachers spend time manually scanning records | Surfaces the most important students first |
-| Students know they are struggling, but not why | Identifies the main academic cause behind low performance |
-| Intervention is usually informal and disconnected | Creates a visible teacher-to-student improvement record |
+## 🚩 Problem → Solution Mapping
 
-## Why Judges Should Care
+| University Challenge | Shiksha Mitra Solution |
+|----------------------|------------------------|
+| Risk detected too late | Early structured risk classification |
+| Manual scanning of records | Prioritized student surfacing |
+| Students unaware of root cause | Cause-based academic explanation |
+| Informal intervention | Logged and trackable improvement plan |
 
-- **Real use case**: built for a university SIMS environment, not a generic analytics demo.
-- **Real AI**: uses an ordinal logistic regression pipeline, not static if-else scoring alone.
-- **Explainable output**: every prediction is paired with a clear academic cause.
-- **Action-oriented design**: prediction leads directly to notification and follow-up.
-- **Full-stack execution**: working frontend, backend, ML pipeline, analytics, and deployment.
-- **Demo-friendly clarity**: judges can understand the problem, the AI, and the impact within minutes.
+---
 
-## Core Capabilities
+## ✨ Core Capabilities
 
-### 1. Faculty Dashboard
-Faculty can:
-- review class-wide performance in one screen
-- inspect low, medium, and high risk distribution
-- search, sort, and filter the student review list
-- open detailed student performance summaries
-- trigger interventions instantly
+### 1️⃣ Faculty Dashboard
+- Class-wide risk distribution
+- Department-level performance summary
+- Search, filter, and sort student records
+- Deep-dive student analysis
+- One-click intervention logging
 
-### 2. Student Performance Review
-Each student record includes:
-- performance score
-- risk band
-- primary cause
-- supporting factors
-- faculty recommendation
+### 2️⃣ Student Performance Review
+Each student profile includes:
+- Risk band (Low / Medium / High)
+- Performance score
+- Primary academic cause
+- Supporting indicators
+- Faculty recommendation
 
-### 3. Cause-Based Intervention
-The system highlights likely reasons such as:
-- low attendance
-- backlog burden
-- assignment submission gap
-- low internal marks
-- weak quiz performance
-- low CGPA
+### 3️⃣ Cause-Based Risk Detection
+Model highlights structured factors such as:
+- Attendance percentage  
+- Internal marks  
+- Assignment gaps  
+- Quiz performance  
+- Backlogs  
+- CGPA  
 
-### 4. Notification Loop
-After a teacher clicks **Notify**:
-- the intervention is logged
-- the student dashboard reflects the alert
-- the recommendation becomes a personalized improvement plan
+### 4️⃣ Closed-Loop Intervention
+When faculty clicks **Notify**:
+- The action is logged  
+- Student dashboard updates  
+- Recommendation becomes a visible improvement plan  
 
-## AI Engine
+---
 
-### Input Features
-The model uses real academic indicators from the dataset:
+## 🧠 AI Engine
+
+### 📊 Input Features
+
 - `Department`
 - `Semester`
 - `Attendance_Percentage`
@@ -96,127 +100,128 @@ The model uses real academic indicators from the dataset:
 - `Quiz_Average`
 - `Backlogs_Count`
 - `CGPA`
-- `Risk_Label`
 
-### Preprocessing
-The ML pipeline applies:
-- **OneHotEncoder** for department
-- **StandardScaler** for numeric features
-- data refinement and severity scoring before ordinal labeling
+<p align="center">
+  <img src="input_features.png" alt="Input Features" width="75%" />
+</p>
 
-### Model Choice
-The system uses an **ordinal logistic regression approach** because academic status is naturally ordered:
+---
 
-**Low Risk -> Medium Risk -> High Risk**
+### ⚙ Machine Learning Pipeline
 
-This makes the model a strong fit for a university dashboard because it is:
-- explainable
-- lightweight
-- structured-data friendly
-- suitable for quick retraining and live demos
+<p align="center">
+  <img src="pipeline.png" alt="ML Pipeline" width="75%"  height="50%"/>
+</p>
 
-### Imbalance Handling
-The dataset is imbalanced, so the model uses:
-- `class_weight='balanced'`
+---
 
-to improve fairness across risk groups.
+### 📌 Model Choice
 
-## Model Performance
+An **Ordinal Logistic Regression** model is used because academic performance is naturally ordered:
 
-The evaluation is based on **5-fold stratified cross-validation**.
-
-| Human-Friendly Metric | Current Result |
-|---|---|
-| Overall Correct Predictions | **92.92%** |
-| Balanced Risk Detection | **78.70%** |
-| Prediction Reliability | **75.71%** |
-| Overall Model Stability | **74.52%** |
-
-### What These Numbers Mean
-- the model is strong at separating stable students from students needing intervention
-- it remains reasonably balanced across low, medium, and high risk groups
-- it is accurate enough to support faculty review decisions in a hackathon demo context
-
-## End-to-End Flow
-
-```mermaid
-flowchart LR
-    A[Student Academic Records] --> B[Preprocessing]
-    B --> C[Ordinal Logistic Regression Model]
-    C --> D[Performance Score and Risk Band]
-    D --> E[Cause Detection Layer]
-    E --> F[Faculty Dashboard]
-    F --> G[Teacher Intervention]
-    G --> H[Notification Store]
-    H --> I[Student Improvement Plan]
+```
+Low Risk -> Medium Risk -> High Risk
 ```
 
-## Suggested Demo Flow
+Why this works well in a university setting:
 
-### Faculty View
-1. Open the live dashboard.
-2. Show the class performance distribution and department summary.
-3. Search for a student in the review list.
-4. Open the student summary and explain the detected cause.
-5. Use the analyzer to recalculate the student record.
-6. Click **Notify** to create an intervention.
+- Interpretable outputs  
+- Lightweight and fast  
+- Structured-data friendly  
+- Easy retraining for new semesters  
+- Ideal for dashboards and real-time analysis  
 
-### Student View
-7. Switch to the student dashboard.
-8. Show the updated alert and recommendation.
-9. Explain how faculty action becomes a visible improvement plan.
+---
 
-### What This Demo Proves
-- AI is actively analyzing student performance
-- the system is explainable, not a black box
-- intervention is built into the workflow
-- the product is usable by both faculty and students
+## 🔄 End-to-End Implementation Flow
 
-## Tech Stack
+<p align="center">
+  <img src="./readme_images/implementation.png" alt="Implementation Flow" width="75%" />
+</p>
+
+<p align="center"><em>From data ingestion to live faculty intervention.</em></p>
+
+---
+
+## 👨‍🏫 Faculty Demo Flow
+
+1. Open dashboard  
+2. Review class distribution  
+3. Search a student  
+4. Inspect detected cause  
+5. Recalculate performance (Analyzer)  
+6. Click **Notify** to trigger intervention  
+
+---
+
+## 🎓 Student Experience
+
+1. Open student dashboard  
+2. View alert and improvement plan  
+3. Track actionable academic guidance  
+
+---
+
+## 🏗 Tech Stack
 
 | Layer | Technology |
-|---|---|
-| Frontend | HTML, CSS, Vanilla JavaScript |
+|-------|------------|
+| Frontend | HTML, CSS, Vanilla JS |
 | Backend | FastAPI |
-| AI / Data Science | Python, pandas, NumPy, scikit-learn |
+| AI / ML | Python, pandas, NumPy, scikit-learn |
 | Storage | SQLite |
 | Deployment | Render |
 
-## Project Structure
+---
 
-```text
+## 📁 Project Structure
+
+
+The folder structure of **Shiksha Mitra** is organized to keep the backend, frontend, and data components clearly separated for better readability and scalability.
+
+```
 Shiksha-Mitra/
-??? app.py
-??? requirements.txt
-??? backend/
-?   ??? app.py
-?   ??? model_engine.py
-?   ??? __init__.py
-??? data/
-?   ??? imbalanced_train.csv
-??? public/
-?   ??? index.html
-?   ??? styles.css
-?   ??? app.js
-?   ??? logo.jpg
-??? ui-ux design.png
+│
+├── app.py
+├── requirements.txt
+│
+├── backend/
+│   ├── app.py
+│   ├── model_engine.py
+│   └── __init__.py
+│
+├── data/
+│   └── imbalanced_train.csv
+│
+├── public/
+│   ├── index.html
+│   ├── styles.css
+│   ├── app.js
+│   └── logo.jpg
+│
+└── ui-ux design.png
 ```
 
-## API Snapshot
+---
+
+## 🔌 API Snapshot
 
 | Endpoint | Purpose |
-|---|---|
-| `/health` | backend health check |
-| `/students` | paginated faculty review data |
-| `/students/{student_id}` | detailed student summary |
-| `/analyze-risk` | live performance analysis |
-| `/class-analytics` | class distribution and department analytics |
-| `/dashboard-metrics` | top-level faculty dashboard counts |
-| `/model-metrics` | AI evaluation summary |
-| `/notifications` | intervention create and fetch |
+|----------|---------|
+| `/health` | Backend status check |
+| `/students` | Faculty review list |
+| `/students/{id}` | Detailed student profile |
+| `/analyze-risk` | Live risk recalculation |
+| `/class-analytics` | Distribution insights |
+| `/dashboard-metrics` | Summary statistics |
+| `/model-metrics` | ML evaluation metrics |
+| `/notifications` | Create & fetch interventions |
 
-## Local Run
+---
 
+## 🚀 Run Locally
+
+once inside the folder
 ```bash
 pip install -r requirements.txt
 python -m uvicorn app:app --reload
@@ -228,18 +233,18 @@ Then open:
 http://127.0.0.1:8000
 ```
 
-## Future Scope
+##🔮 Future Scope
 
-- role-based login for faculty, students, and administrators
-- advisor scheduling and meeting history
-- persistent cloud database for interventions
-- semester-over-semester trend analysis
-- email, SMS, or WhatsApp notification delivery
-- longitudinal recovery tracking for at-risk students
+- Role-based login for faculty, students, and administrators
+- Advisor scheduling and meeting history
+- Persistent cloud database for interventions
+- Semester-over-semester trend analysis
+- Email, SMS, or WhatsApp notification delivery
+- Longitudinal recovery tracking for at-risk students
 
-## Closing Statement
 
-**Shiksha Mitra is not just a dashboard. It is a decision-support system for academic care.**
+
+## "Shiksha Mitra is not just a dashboard. It is a decision-support system for academic care."
 
 It helps an institution move from delayed reaction to timely intervention, using data that universities already collect but rarely convert into action with this level of clarity.
 
@@ -248,3 +253,14 @@ For a hackathon, it demonstrates the combination that matters most:
 - usable AI
 - full-stack execution
 - strong product thinking
+  </p>
+</div>
+
+---
+
+
+
+
+
+
+
