@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import asdict, dataclass
 from pathlib import Path
+from threading import Lock
 from typing import Any
 
 import numpy as np
@@ -230,7 +231,12 @@ class ModelEngine:
         self.training_data = self._load_training_data()
         self.pipeline = _build_pipeline()
         self.pipeline.fit(self.training_data[MODEL_FEATURES], self.training_data['Ordinal_Risk_Label'])
-        self.model_metrics = self._evaluate_model()
+        self._analysis_cache: list[dict[str, Any]] | None = None
+        self._class_summary_cache: dict[str, Any] | None = None
+        self._model_metrics_cache: dict[str, Any] | None = None
+        self._analysis_lock = Lock()
+        self._summary_lock = Lock()
+        self._metrics_lock = Lock()
 
     def _load_training_data(self) -> pd.DataFrame:
         if not self.dataset_path.exists():
@@ -280,7 +286,6 @@ class ModelEngine:
         risk_probability = max(0.0, min(1.0, 1.0 - success_probability))
         return score, success_probability, risk_probability
 
-
     def _evaluate_model(self) -> dict[str, Any]:
         features = self.training_data[MODEL_FEATURES]
         labels = self.training_data['Ordinal_Risk_Label']
@@ -322,7 +327,11 @@ class ModelEngine:
         }
 
     def get_model_metrics(self) -> dict[str, Any]:
-        return self.model_metrics
+        if self._model_metrics_cache is None:
+            with self._metrics_lock:
+                if self._model_metrics_cache is None:
+                    self._model_metrics_cache = self._evaluate_model()
+        return self._model_metrics_cache
 
     def analyze_student(self, student_payload: dict[str, Any]) -> AnalysisResult:
         payload = {
@@ -359,7 +368,7 @@ class ModelEngine:
             },
         )
 
-    def list_student_analysis(self) -> list[dict[str, Any]]:
+    def _build_student_analysis_cache(self) -> list[dict[str, Any]]:
         students = self.training_data.to_dict(orient='records')
         analyzed: list[dict[str, Any]] = []
         for student in students:
@@ -389,7 +398,14 @@ class ModelEngine:
         )
         return analyzed
 
-    def class_summary(self) -> dict[str, Any]:
+    def list_student_analysis(self) -> list[dict[str, Any]]:
+        if self._analysis_cache is None:
+            with self._analysis_lock:
+                if self._analysis_cache is None:
+                    self._analysis_cache = self._build_student_analysis_cache()
+        return self._analysis_cache
+
+    def _build_class_summary(self) -> dict[str, Any]:
         students = self.list_student_analysis()
         risk_distribution = {'Low': 0, 'Medium': 0, 'High': 0}
         cause_distribution: dict[str, int] = {}
@@ -434,3 +450,9 @@ class ModelEngine:
             'top_risk_students': students[:8],
         }
 
+    def class_summary(self) -> dict[str, Any]:
+        if self._class_summary_cache is None:
+            with self._summary_lock:
+                if self._class_summary_cache is None:
+                    self._class_summary_cache = self._build_class_summary()
+        return self._class_summary_cache
