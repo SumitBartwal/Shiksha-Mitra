@@ -1,0 +1,7 @@
+﻿{
+  "python.defaultInterpreterPath": "C:\\Users\\bartw\\.platformio\\penv\\Scripts\\python.exe",
+  "python.terminal.activateEnvironment": false,
+  "terminal.integrated.env.windows": {
+    "PATH": "C:\\Users\\bartw\\.platformio\\penv\\Scripts;C:\\Users\\bartw\\.platformio\\python3;${env:PATH}"
+  }
+}
