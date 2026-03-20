@@ -233,7 +233,7 @@ Then open:
 http://127.0.0.1:8000
 ```
 
-##🔮 Future Scope
+## 🔮 Future Scope
 
 - Role-based login for faculty, students, and administrators
 - Advisor scheduling and meeting history
@@ -241,6 +241,17 @@ http://127.0.0.1:8000
 - Semester-over-semester trend analysis
 - Email, SMS, or WhatsApp notification delivery
 - Longitudinal recovery tracking for at-risk students
+
+
+## Business Model
+
+| Aspect | Details |
+|--------|----------|
+| Target Market | B2B SaaS platform for universities and colleges, integrated with existing SIMS systems |
+| Revenue Model | Annual subscription with tiered pricing based on total student strength |
+| Cost Structure | Cloud hosting, storage, API bandwidth, and system maintenance (lightweight ML keeps compute costs low) |
+| Scalability | Multi-institution deployment with isolated data and horizontal backend scaling |
+| Future Expansion | Sentiment analysis, AI academic tutor, dropout prediction, automated alerts, advanced analytics |
 
 
 
